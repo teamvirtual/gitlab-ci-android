@@ -37,8 +37,13 @@ RUN rm -f /etc/ssl/certs/java/cacerts; \
 
 RUN curl -s https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip > /sdk.zip && \
     unzip /sdk.zip -d /sdk && \
-    rm -v /sdk.zip
-
+    rm -v /sdk.zip \
+    curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh \
+    bash nodesource_setup.sh && \
+    apt update && \
+    && apt install -y nodejs \
+    && curl https://install.meteor.com/ | sh \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN mkdir -p $ANDROID_HOME/licenses/ \
   && echo "8933bad161af4178b1185d1a37fbf41ea5269c55\nd56f5187479451eabf01fb78af6dfcb131a6481e" > $ANDROID_HOME/licenses/android-sdk-license \
   && echo "84831b9409646a918e30573bab4c9c91346d8abd\n504667f4c0de7af1a06de9f4b1727b84351f2910" > $ANDROID_HOME/licenses/android-sdk-preview-license
